@@ -79,43 +79,31 @@ confusion_matrix(y_pred,y_test)
 
 print(classification_report(y_pred,y_test))
 
-!pip install streamlit
-!pip install pyngrok
 
-# Commented out IPython magic to ensure Python compatibility.
-# %%writefile app-ml.py
-# import streamlit as st
-# import pandas as pd
-# from sklearn.model_selection import train_test_split
-# from sklearn.pipeline import Pipeline
-# from sklearn.feature_extraction.text import TfidfVectorizer
-# from sklearn.naive_bayes import MultinomialNB
-# 
-# def user_input():
-#   review = st.text_input("Enter the review: ")
-#   data = {'review':review}
-#   features=pd.DataFrame(data,index=[0])
-#   return features
-# 
-# st.title("Sentiment analysis")
-# st.subheader(" Amazon fine food reviews")
-# df = user_input()
-# st.write(df)
-# data=pd.read_csv('/content/drive/My Drive/python-smartknower/Reviews.csv')
-# data['Score'] = data['Score'].apply(lambda x : "positive"  if x>2  else "negative")
-# x=data.iloc[:,9].values
-# y=data.iloc[:,6].values
-# x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.3,random_state = 0)
-# text_model = Pipeline([('tfidf',TfidfVectorizer()),('model',MultinomialNB())])
-# text_model.fit(x_train, y_train)
-# y_pred=text_model.predict(df['review'])
-# out={'sentiment':y_pred}
-# output=pd.DataFrame(out,index=[0])
-# st.write(output)
+
+
+  def user_input():
+    review = st.text_input("Enter the review: ")
+    data = {'review':review}
+    features=pd.DataFrame(data,index=[0])
+    return features
+ 
+  st.title("Sentiment analysis")
+  st.subheader(" Amazon fine food reviews")
+  df = user_input()
+  st.write(df)
+  data=pd.read_csv('/content/drive/My Drive/python-smartknower/Reviews.csv')
+  data['Score'] = data['Score'].apply(lambda x : "positive"  if x>2  else "negative")
+  x=data.iloc[:,9].values
+  y=data.iloc[:,6].values
+  x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.3,random_state = 0)
+  text_model = Pipeline([('tfidf',TfidfVectorizer()),('model',MultinomialNB())])
+  text_model.fit(x_train, y_train)
+  y_pred=text_model.predict(df['review'])
+  out={'sentiment':y_pred}
+  output=pd.DataFrame(out,index=[0])
+  st.write(output)
 
 from pyngrok import ngrok
 ngrok.connect(port='8501')
 
-!streamlit run app-ml.py
- 
- 
